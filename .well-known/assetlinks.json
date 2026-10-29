@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "io.github.chardducsys.fareast",
+    "sha256_cert_fingerprints": [
+      "00:B5:2B:55:6F:E0:4C:A8:C0:29:0B:CB:C2:2E:33:FF:38:E9:3E:47:D9:52:4A:28:25:B4:48:B3:06:8F:39:5C"
+    ]
+  }
+}]
