@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='6' fill='%23A93A28'/%3E%3Crect x='5' y='5' width='54' height='54' rx='3' fill='none' stroke='%23fff' stroke-width='2'/%3E%3Ctext x='32' y='30' font-size='22' text-anchor='middle' fill='%23fff' font-family='serif' font-weight='700'%3E%EB%8D%95%3C/text%3E%3Ctext x='32' y='53' font-size='22' text-anchor='middle' fill='%23fff' font-family='serif' font-weight='700'%3E%EB%8F%84%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://chardduc-sys.github.io/duckdo/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="주식회사 덕도">
+<meta property="og:description" content="파주 봉일천 상가 건물 임대, 그리고 턴제 전략 게임 「동방열국지」">
+<meta property="og:image" content="https://chardduc-sys.github.io/duckdo/assets/deokdo-day.jpg">
+<meta property="og:url" content="https://chardduc-sys.github.io/duckdo/">
+<meta name="theme-color" content="#EDEEEA">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
+<title>주식회사 덕도</title>
+<meta name="description" content="파주 봉일천에서 상가 건물을 보유·임대하고, 턴제 전략 게임 「동방열국지」를 만드는 주식회사 덕도입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* Layout: 한 줄 편집형 지면. 낮(밝은 화면)과 해질녘(어두운 화면)이 조감도와 함께 바뀌고,
+   등기부·장부처럼 정리한 회사 정보, 건물 입점 안내판, 게임 지도를 담은 남색 띠로 이어짐 */
+:root {
+  --bg: #EDEEEA;
+  --surface: #F7F7F4;
+  --ink: #171C22;
+  --ink-2: #47505A;
+  --muted: #697079;
+  --line: #D3D6D0;
+  --line-strong: #B5BAB2;
+  --accent: #A93A28;
+  --accent-ink: #FFFFFF;
+  --board: #26292D;
+  --board-ink: #F2F1EC;
+  --board-mute: #A6ABB1;
+  --board-line: #3B3F44;
+  --game: #141F29;
+  --game-2: #1B2935;
+  --game-ink: #E8EDF2;
+  --game-mute: #A3B2C0;
+  --game-gold: #C9A85A;
+  --game-line: #2C3B48;
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --grid: #E0E2DC;
+  --axis: #BDC1B9;
+  --tip-bg: #171C22;
+  --tip-ink: #F7F7F4;
+  --day: 1;
+  --dusk: 0;
+  --f-display: "Hahmlet", "Noto Serif KR", "Nanum Myeongjo", "AppleMyungjo", serif;
+  --f-body: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #181215; --surface: #221A1E; --ink: #F1E9E4; --ink-2: #D0C3BD; --muted: #A3958F;
+    --line: #3A2E33; --line-strong: #56464C; --accent: #EE7552; --accent-ink: #1A1114;
+    --board: #0F0C0E; --board-ink: #F2ECE8; --board-mute: #A99C97; --board-line: #2E2529;
+    --game: #0E1720; --game-2: #15212C; --game-ink: #E8EDF2; --game-mute: #9FB0BF; --game-gold: #D6B465; --game-line: #253442;
+    --s1: #3987e5; --s2: #d95926; --s3: #199e70; --grid: #33282D; --axis: #4C3E44;
+    --tip-bg: #F1E9E4; --tip-ink: #181215;
+    --day: 0; --dusk: 1;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #181215; --surface: #221A1E; --ink: #F1E9E4; --ink-2: #D0C3BD; --muted: #A3958F;
+  --line: #3A2E33; --line-strong: #56464C; --accent: #EE7552; --accent-ink: #1A1114;
+  --board: #0F0C0E; --board-ink: #F2ECE8; --board-mute: #A99C97; --board-line: #2E2529;
+  --game: #0E1720; --game-2: #15212C; --game-ink: #E8EDF2; --game-mute: #9FB0BF; --game-gold: #D6B465; --game-line: #253442;
+  --s1: #3987e5; --s2: #d95926; --s3: #199e70; --grid: #33282D; --axis: #4C3E44;
+  --tip-bg: #F1E9E4; --tip-ink: #181215;
+  --day: 0; --dusk: 1;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 120px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 400 16px/1.75 var(--f-body);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--bg);
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+a:hover { color: var(--accent); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 600; text-wrap: balance; margin: 0; letter-spacing: -0.01em; }
+p { margin: 0; }
+.wrap {
+  width: 100%; max-width: 1180px; margin-inline: auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.eyebrow {
+  font-family: var(--f-mono); font-size: 12.5px; letter-spacing: 0.08em; color: var(--muted);
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+}
+.eyebrow::before { content: ""; width: 18px; height: 1px; background: currentColor; }
+.num { font-variant-numeric: tabular-nums; }
+.note { font-size: 13px; color: var(--muted); }
+
+/* ---------- header ---------- */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: var(--bg); border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px 20px; padding-block: 10px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--ink); }
+.brand b { font-family: var(--f-display); font-weight: 600; font-size: 18px; letter-spacing: 0.02em; }
+.brand small { font-size: 12px; color: var(--muted); display: block; line-height: 1.2; }
+.seal {
+  width: 36px; height: 36px; flex: none; display: grid; place-content: center; text-align: center;
+  background: var(--accent); color: var(--accent-ink); border-radius: 3px;
+  font: 700 13px/1.02 var(--f-display);
+  box-shadow: inset 0 0 0 3px var(--accent), inset 0 0 0 4px var(--accent-ink);
+}
+.nav { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; justify-self: center; min-width: 0; }
+.nav::-webkit-scrollbar { display: none; }
+.nav a {
+  text-decoration: none; font-size: 14.5px; color: var(--ink-2); padding: 6px 10px; border-radius: 4px; white-space: nowrap;
+}
+.nav a:hover { color: var(--ink); background: var(--surface); }
+.mode { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 999px; padding: 2px; }
+.mode button {
+  font: 500 13px/1 var(--f-body); color: var(--ink-2); background: transparent; border: 0;
+  padding: 7px 12px; border-radius: 999px; cursor: pointer;
+}
+.mode button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+@media (max-width: 860px) {
+  .top .wrap { grid-template-columns: 1fr auto; }
+  .nav { grid-column: 1 / -1; grid-row: 2; justify-self: stretch; margin-inline: -6px; }
+  html { scroll-padding-top: 130px; }
+}
+
+/* ---------- hero ---------- */
+.hero { display: grid; grid-template-columns: minmax(0, 11fr) minmax(0, 13fr); gap: 48px; align-items: center; padding-block: 56px 40px; }
+.hero h1 { font-size: clamp(30px, 4.2vw, 50px); line-height: 1.22; margin-block: 18px 22px; font-weight: 600; }
+.hero h1 em { font-style: normal; color: var(--accent); }
+.lede { font-size: 17.5px; color: var(--ink-2); max-width: 34em; }
+.cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; text-decoration: none;
+  font: 500 15px/1 var(--f-body); padding: 13px 18px; border-radius: 4px;
+  border: 1px solid var(--line-strong); color: var(--ink); background: transparent;
+}
+.btn:hover { border-color: var(--ink); color: var(--ink); }
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.primary:hover { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.render { position: relative; aspect-ratio: 4 / 3; max-width: 100%; border-radius: 4px; overflow: hidden; background: var(--surface); }
+.render img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity .7s ease; }
+.render .day { opacity: var(--day); }
+.render .dusk { opacity: var(--dusk); }
+.render.flip .day { opacity: var(--dusk); }
+.render.flip .dusk { opacity: var(--day); }
+@media (prefers-reduced-motion: reduce) { .render img { transition: none; } }
+figure { margin: 0; }
+figcaption { font-size: 13px; color: var(--muted); margin-top: 10px; display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+figcaption .mono { font-family: var(--f-mono); font-size: 12px; }
+
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--line); margin-bottom: 24px; }
+.facts > div { padding: 18px 20px 18px 0; display: grid; gap: 2px; }
+.facts > div + div { padding-left: 20px; border-left: 1px solid var(--line); }
+.facts dt { font-size: 13px; color: var(--muted); }
+.facts dd { margin: 0; font-weight: 600; font-size: 18px; }
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 32px 28px; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts > div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .facts > div:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+
+/* ---------- sections ---------- */
+.sec { padding-block: 72px; }
+.sec + .sec { border-top: 1px solid var(--line); }
+.sec-head { display: grid; gap: 12px; margin-bottom: 36px; max-width: 46em; }
+.sec-head h2 { font-size: clamp(26px, 3.2vw, 38px); line-height: 1.25; }
+.sec-head p.lead { color: var(--ink-2); font-size: 16.5px; }
+@media (max-width: 640px) { .sec { padding-block: 52px; } }
+
+/* about */
+.about { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
+.about-text { display: grid; gap: 28px; }
+.about-text > p { color: var(--ink-2); max-width: 32em; }
+.ledger { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+.ledger-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 14px 20px; border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.ledger-head b { font-family: var(--f-display); font-size: 16px; color: var(--ink); font-weight: 600; letter-spacing: 0.1em; }
+.ledger dl { margin: 0; }
+.ledger .row { display: grid; grid-template-columns: 9.5em minmax(0, 1fr); border-bottom: 1px solid var(--line); }
+.ledger .row:last-child { border-bottom: 0; }
+.ledger dt { padding: 12px 20px; font-size: 14px; color: var(--muted); border-right: 1px solid var(--line); }
+.ledger dd { margin: 0; padding: 12px 20px; font-size: 15px; }
+.ledger dd .sub { display: block; font-size: 13px; color: var(--muted); }
+@media (max-width: 560px) {
+  .ledger .row { grid-template-columns: minmax(0, 1fr); }
+  .ledger dt { border-right: 0; padding-bottom: 0; font-size: 13px; }
+  .ledger dd { padding-top: 2px; }
+}
+.purposes { display: grid; gap: 14px; }
+.mini-h { font-family: var(--f-body); font-size: 14px; font-weight: 600; color: var(--ink-2); margin-bottom: 4px; }
+.purposes h3 { font-family: var(--f-body); font-size: 14px; font-weight: 600; color: var(--ink-2); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 6px 0 0; }
+.chips li { font-size: 13.5px; padding: 5px 10px; border: 1px solid var(--line-strong); border-radius: 3px; }
+.chips.alt li { border-color: var(--accent); }
+.history { list-style: none; margin: 0; padding: 0; display: grid; }
+.history li { display: grid; grid-template-columns: 6.5em minmax(0, 1fr); gap: 16px; padding: 12px 0; border-top: 1px solid var(--line); }
+.history time, .history .when { font-family: var(--f-mono); font-size: 13.5px; color: var(--muted); padding-top: 2px; }
+.history .now { color: var(--accent); }
+@media (max-width: 860px) { .about { grid-template-columns: minmax(0, 1fr); gap: 36px; } }
+
+/* buildings */
+.bldgs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
+.bldg { display: grid; gap: 16px; align-content: start; }
+.bldg .pic { aspect-ratio: 16 / 10; max-width: 100%; border-radius: 4px; overflow: hidden; position: relative; background: var(--surface); }
+.bldg .pic img { width: 100%; height: 100%; object-fit: cover; }
+.bldg h3 { font-size: 24px; }
+.bldg .addr { font-size: 15px; color: var(--ink-2); }
+.bldg p { color: var(--ink-2); }
+.links { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; }
+@media (max-width: 760px) { .bldgs { grid-template-columns: minmax(0, 1fr); gap: 44px; } }
+
+/* tenants */
+.tenancy { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 48px; align-items: start; }
+.tenancy-text { display: grid; gap: 28px; }
+.kv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--line); margin: 0; }
+.kv > div { padding: 16px 16px 16px 0; display: grid; gap: 2px; }
+.kv > div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+.kv dt { font-size: 13px; color: var(--muted); }
+.kv dd { margin: 0; font-size: 20px; font-weight: 600; }
+.kv dd small { display: block; font-size: 12.5px; font-weight: 400; color: var(--muted); }
+@media (max-width: 520px) {
+  .kv { grid-template-columns: minmax(0, 1fr); }
+  .kv > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+}
+
+.board {
+  background: var(--board); color: var(--board-ink); border-radius: 4px; padding: 26px 24px 20px;
+  box-shadow: inset 0 0 0 1px var(--board-line);
+  background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1.2px);
+  background-size: 7px 7px;
+}
+.board-head { display: flex; align-items: center; gap: 12px; padding-bottom: 16px; border-bottom: 2px solid var(--board-ink); }
+.board-head h3 { font-size: 22px; letter-spacing: 0.12em; font-weight: 700; }
+.board-head span { margin-left: auto; font-family: var(--f-mono); font-size: 11.5px; color: var(--board-mute); letter-spacing: 0.06em; }
+.board-group { padding-top: 14px; }
+.board-group h4 { margin: 0 0 4px; font-size: 12px; font-weight: 500; color: var(--board-mute); letter-spacing: 0.12em; }
+.board ul { list-style: none; margin: 0; padding: 0; }
+.board li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--board-line); }
+.board li b { font-family: var(--f-display); font-weight: 600; font-size: 17.5px; }
+.board li i { font-style: normal; font-size: 13px; color: var(--board-mute); white-space: nowrap; }
+.board-foot { margin-top: 16px; font-size: 13px; color: var(--board-mute); display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.board-foot a { color: var(--board-ink); text-decoration-color: var(--board-mute); }
+@media (max-width: 900px) { .tenancy { grid-template-columns: minmax(0, 1fr); } }
+
+/* charts */
+.chart { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: 20px 22px 18px; display: grid; gap: 14px; min-width: 0; }
+.chart h3 { font-family: var(--f-body); font-size: 15px; font-weight: 600; }
+.chart h3 small { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 6px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; list-style: none; padding: 0; margin: 0; font-size: 13.5px; color: var(--ink-2); }
+.legend li { display: inline-flex; align-items: center; gap: 7px; }
+.legend li::before { content: ""; width: 10px; height: 10px; border-radius: 2px; background: var(--sw); flex: none; }
+.legend.values { display: grid; gap: 6px; }
+.legend.values li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto; gap: 8px; }
+.legend.values li span:last-child { font-variant-numeric: tabular-nums; color: var(--ink); }
+.stack { display: flex; gap: 2px; height: 22px; }
+.seg { height: 100%; flex-basis: 0; flex-shrink: 0; min-width: 3px; background: var(--sw); cursor: default; }
+.seg:first-child { border-radius: 4px 0 0 4px; }
+.seg:last-child { border-radius: 0 4px 4px 0; }
+.seg:hover, .seg:focus-visible { filter: brightness(1.08); }
+
+.wf { display: grid; gap: 4px; }
+.wf-row { display: grid; grid-template-columns: 7.2em minmax(0, 1fr); align-items: center; gap: 12px; }
+.wf-label { font-size: 13.5px; color: var(--ink-2); text-align: right; }
+.wf-track {
+  position: relative; height: 30px; margin-right: 52px;
+  background-image: linear-gradient(to right, var(--grid) 1px, transparent 1px);
+  background-size: 25% 100%; background-repeat: repeat-x; border-right: 1px solid var(--grid);
+}
+.wf-track::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--axis); }
+.wf-bar { position: absolute; top: 6px; height: 18px; border-radius: 4px; background: var(--sw); min-width: 3px; }
+.wf-bar.total { border-radius: 0 4px 4px 0; }
+.wf-bar:hover, .wf-bar:focus-visible { filter: brightness(1.08); }
+.wf-val { position: absolute; top: 5px; font-size: 13px; font-variant-numeric: tabular-nums; color: var(--ink); padding-left: 6px; white-space: nowrap; }
+.wf-axis { display: grid; grid-template-columns: 7.2em minmax(0, 1fr); gap: 12px; }
+.wf-ticks { position: relative; height: 18px; margin-right: 52px; font-size: 11.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.wf-ticks span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+.wf-ticks span:first-child { transform: none; }
+@media (max-width: 520px) {
+  .wf-row, .wf-axis { grid-template-columns: 5.6em minmax(0, 1fr); gap: 8px; }
+  .wf-label { font-size: 12.5px; }
+  .chart { padding: 16px 14px; }
+}
+
+/* finance */
+.tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-block: 1px solid var(--line); margin-bottom: 32px; }
+.tile { padding: 18px 18px 18px 0; display: grid; gap: 4px; align-content: start; }
+.tile + .tile { padding-left: 18px; border-left: 1px solid var(--line); }
+.tile .label { font-size: 13px; color: var(--muted); }
+.tile .value { font-size: clamp(22px, 2.6vw, 30px); font-weight: 600; line-height: 1.25; }
+.tile .value small { font-size: 0.55em; font-weight: 500; margin-left: 2px; }
+.tile .sub { font-size: 13px; color: var(--ink-2); }
+@media (max-width: 860px) {
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tile:nth-child(3) { padding-left: 0; border-left: 0; }
+  .tile:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+.fin-read { max-width: 46em; color: var(--ink-2); margin-bottom: 32px; display: grid; gap: 12px; }
+.fin-grid { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px; align-items: start; }
+.fin-side { display: grid; gap: 20px; }
+@media (max-width: 900px) { .fin-grid { grid-template-columns: minmax(0, 1fr); } }
+.statements { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px; margin-top: 20px; }
+@media (max-width: 860px) { .statements { grid-template-columns: minmax(0, 1fr); } }
+.tbl-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+caption { text-align: left; padding: 14px 16px 10px; font-weight: 600; font-size: 15px; }
+caption small { font-weight: 400; color: var(--muted); font-size: 12.5px; margin-left: 6px; }
+th, td { padding: 8px 16px; border-top: 1px solid var(--line); text-align: left; }
+td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--f-mono); font-size: 13.5px; }
+tr.sub th { padding-left: 30px; font-weight: 400; color: var(--ink-2); }
+tr.sub td { color: var(--ink-2); }
+tr.total th, tr.total td { font-weight: 600; border-top: 1px solid var(--line-strong); }
+thead th { font-size: 12.5px; color: var(--muted); font-weight: 500; }
+th { font-weight: 400; }
+
+/* game band */
+.band { background: var(--game); color: var(--game-ink); position: relative; overflow: hidden; }
+.band .sec { border-top: 0; }
+.band .eyebrow { color: var(--game-mute); }
+.band .sec-head p.lead { color: var(--game-mute); }
+.game-title { display: flex; align-items: center; gap: 16px; }
+.game-title img { width: 56px; height: 56px; border-radius: 12px; }
+.band h2 { color: var(--game-ink); }
+.band h2 .q { color: var(--game-gold); }
+.game { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 48px; align-items: start; }
+.shots { position: relative; padding-bottom: 40px; padding-right: 8%; }
+.browser { border: 1px solid var(--game-line); border-radius: 6px; overflow: hidden; background: var(--game-2); }
+.browser .bar { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-bottom: 1px solid var(--game-line); font-family: var(--f-mono); font-size: 12px; color: var(--game-mute); }
+.browser .bar::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--game-gold); flex: none; }
+.phone {
+  position: absolute; right: 0; bottom: 0; width: 26%; max-width: 100%;
+  border-radius: 18px; overflow: hidden; border: 5px solid var(--game-2);
+  box-shadow: 0 0 0 1px var(--game-line), 0 18px 40px rgba(0,0,0,.45);
+}
+.band figcaption { color: var(--game-mute); }
+.game-side { display: grid; gap: 32px; }
+.feat { list-style: none; margin: 0; padding: 0; display: grid; }
+.feat li { padding: 11px 0; border-top: 1px solid var(--game-line); display: grid; grid-template-columns: 5.5em minmax(0, 1fr); gap: 12px; font-size: 15px; }
+.feat li b { font-weight: 500; color: var(--game-gold); font-size: 13.5px; padding-top: 1px; }
+.road { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.road li { position: relative; padding: 0 0 18px 28px; }
+.road li::before { content: ""; position: absolute; left: 4px; top: 7px; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--game-gold); background: var(--game); }
+.road li.done::before { background: var(--game-gold); }
+.road li:not(:last-child)::after { content: ""; position: absolute; left: 9.5px; top: 22px; bottom: 0; width: 1px; background: var(--game-line); }
+.road b { display: block; font-weight: 600; }
+.road span { font-size: 14px; color: var(--game-mute); }
+.road .state { font-family: var(--f-mono); font-size: 11.5px; letter-spacing: 0.04em; border: 1px solid var(--game-line); border-radius: 3px; padding: 1px 6px; margin-left: 8px; color: var(--game-ink); vertical-align: 2px; }
+.band .btn { color: var(--game-ink); border-color: var(--game-line); }
+.band .btn:hover { border-color: var(--game-gold); color: var(--game-gold); }
+.band .btn.primary { background: var(--game-gold); color: var(--game); border-color: var(--game-gold); }
+.band .btn.primary:hover { filter: brightness(1.08); color: var(--game); }
+.band a:focus-visible, .band button:focus-visible { outline-color: var(--game-gold); }
+@media (max-width: 900px) { .game { grid-template-columns: minmax(0, 1fr); gap: 36px; } .phone { width: 30%; } }
+
+/* notice + contact */
+.notice-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
+.notice-grid > div:first-child { color: var(--ink-2); display: grid; gap: 12px; }
+.empty td { text-align: center; color: var(--muted); padding-block: 28px; }
+@media (max-width: 860px) { .notice-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; } }
+.contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-block: 1px solid var(--line); }
+.contact > div { padding: 20px 20px 20px 0; display: grid; gap: 6px; align-content: start; }
+.contact > div + div { padding-left: 20px; border-left: 1px solid var(--line); }
+.contact .label { font-size: 13px; color: var(--muted); }
+.contact .big { font-size: 19px; font-weight: 600; }
+.copy {
+  justify-self: start; font: 500 13px/1 var(--f-body); padding: 7px 12px; border-radius: 3px; cursor: pointer;
+  border: 1px solid var(--line-strong); background: transparent; color: var(--ink);
+}
+.copy:hover { border-color: var(--ink); }
+@media (max-width: 760px) {
+  .contact { grid-template-columns: minmax(0, 1fr); }
+  .contact > div + div { padding-left: 0; border-left: 0; border-top: 1px solid var(--line); }
+}
+
+footer { border-top: 1px solid var(--line); padding-block: 32px 48px; font-size: 13px; color: var(--muted); }
+footer .wrap { display: grid; gap: 14px; }
+footer .biz { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+footer .biz span { white-space: nowrap; }
+footer .brand b { font-size: 16px; }
+
+#tip {
+  position: fixed; z-index: 50; pointer-events: none; max-width: 260px;
+  background: var(--tip-bg); color: var(--tip-ink); font-size: 13px; line-height: 1.5;
+  padding: 7px 10px; border-radius: 4px; box-shadow: 0 6px 18px rgba(0,0,0,.18);
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="주식회사 덕도 처음으로">
+      <span class="seal" aria-hidden="true">덕<br>도</span>
+      <b>주식회사 덕도</b>
+    </a>
+    <nav class="nav" aria-label="주요 메뉴">
+      <a href="#about">회사 개요</a>
+      <a href="#buildings">보유 건물</a>
+      <a href="#tenants">임차 현황</a>
+      <a href="#finance">재무 현황</a>
+      <a href="#game">게임 사업</a>
+      <a href="#notice">전자공고</a>
+      <a href="#contact">연락처</a>
+    </nav>
+    <div class="mode" role="group" aria-label="화면 밝기">
+      <button type="button" id="mode-day" data-set="light" aria-pressed="true" aria-label="밝은 화면 (낮)">낮</button>
+      <button type="button" id="mode-night" data-set="dark" aria-pressed="false" aria-label="어두운 화면 (밤)">밤</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div>
+      <p class="eyebrow">파주 봉일천 · 부동산 임대 · 게임 개발</p>
+      <h1 id="hero-title">봉일천의 건물을 가꾸고, 동아시아의 <em>지도</em>를 그립니다</h1>
+      <p class="lede">주식회사 덕도는 경기도 파주시 조리읍 봉일천에서 상가 건물을 보유하고 임대합니다. 임대 사업에서 나오는 꾸준한 수입을 바탕으로 온라인 게임 개발사로 사업을 넓히고 있습니다.</p>
+      <div class="cta">
+        <a class="btn primary" href="https://chardduc-sys.github.io/fareast/" target="_blank" rel="noopener">「동방열국지」 플레이 ↗</a>
+        <a class="btn" href="#contact">임대 문의</a>
+      </div>
+    </div>
+    <figure>
+      <div class="render">
+        <img class="day" src="assets/deokdo-day.jpg" width="1600" height="1200" alt="덕도빌딩 조감도. 낮 하늘 아래 모퉁이에 선 4층 석재 마감 상가 건물">
+        <img class="dusk" src="assets/deokdo-dusk.jpg" width="1600" height="1200" alt="덕도빌딩 조감도. 해질녘 불 켜진 창이 보이는 같은 건물">
+      </div>
+      <figcaption><span>덕도빌딩 조감도</span><span class="mono">파주시 조리읍 통일로 324</span></figcaption>
+    </figure>
+  </section>
+
+  <div class="wrap">
+    <dl class="facts">
+      <div><dt>설립</dt><dd>2013년 11월</dd></div>
+      <div><dt>2025년 임대수입</dt><dd class="num">3억 6,657만 원</dd></div>
+      <div><dt>봉일천 입점 업체</dt><dd>7곳</dd></div>
+      <div><dt>첫 게임</dt><dd>「동방열국지」</dd></div>
+    </dl>
+  </div>
+
+  <!-- 회사 개요 -->
+  <section class="sec wrap" id="about" aria-labelledby="about-title">
+    <div class="sec-head">
+      <p class="eyebrow">회사 개요</p>
+      <h2 id="about-title">등기부로 보는 덕도</h2>
+    </div>
+    <div class="about">
+      <div class="about-text">
+        <p>덕도는 2013년 11월 설립된 주식회사입니다. 2023년 12월 지금의 상호로 바꾸고 본점을 서울 마포구에서 경기도 고양시 덕양구로 옮겼습니다. 현재 매출은 모두 건물 임대수입입니다. 등기된 사업목적에 소프트웨어 개발과 출판업이 들어 있어, 같은 법인으로 게임 사업을 시작했습니다.</p>
+        <div>
+          <h3 class="mini-h">연혁</h3>
+          <ol class="history">
+            <li><time datetime="2013-11">2013. 11</time><span>법인 설립</span></li>
+            <li><time datetime="2023-12">2023. 12</time><span>상호를 주식회사 덕도로 변경, 본점을 고양시 덕양구 삼송로로 이전</span></li>
+            <li><time datetime="2025">2025</time><span>연간 임대수입 3억 6,657만 원 (국세청 신고 기준)</span></li>
+            <li><time datetime="2026-10">2026. 10</time><span>턴제 전략 게임 「동방열국지」 웹 버전 공개</span></li>
+            <li><span class="when now">진행 중</span><span>「동방열국지」 Google Play 출시 준비</span></li>
+          </ol>
+        </div>
+      </div>
+      <div style="display:grid;gap:24px;min-width:0">
+        <div class="ledger">
+          <div class="ledger-head"><b>등기사항 요약</b><span>2026. 4. 20 열람 기준</span></div>
+          <dl>
+            <div class="row"><dt>상호</dt><dd>주식회사 덕도</dd></div>
+            <div class="row"><dt>대표이사</dt><dd>김경선</dd></div>
+            <div class="row"><dt>회사성립일</dt><dd class="num">2013년 11월 27일</dd></div>
+            <div class="row"><dt>본점</dt><dd>경기도 고양시 덕양구 삼송로 291-6 (지축동)</dd></div>
+            <div class="row"><dt>사업자등록번호</dt><dd class="num">105-87-95652</dd></div>
+            <div class="row"><dt>자본금</dt><dd class="num">1억 1,800만 원<span class="sub">보통주 23,600주 · 1주의 금액 5,000원</span></dd></div>
+            <div class="row"><dt>업태 · 종목</dt><dd>부동산업 · 비주거용 건물 임대업<span class="sub">도매 및 소매업 · 금속광물 도매업, 전자상거래 소매업</span></dd></div>
+          </dl>
+        </div>
+        <div class="purposes">
+          <div>
+            <h3>임대 사업 관련 사업목적</h3>
+            <ul class="chips"><li>부동산 임대 및 공급업</li><li>부동산 매매 및 임대업</li><li>부동산 관리 용역업</li><li>공간임대업</li></ul>
+          </div>
+          <div>
+            <h3>게임 사업 관련 사업목적</h3>
+            <ul class="chips alt"><li>소프트웨어 개발, 제작 및 판매업</li><li>출판업</li><li>전자상거래업</li></ul>
+          </div>
+          <p class="note">등기사항전부증명서 사업목적 중 일부 발췌</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 보유 건물 -->
+  <section class="sec wrap" id="buildings" aria-labelledby="bldg-title">
+    <div class="sec-head">
+      <p class="eyebrow">보유 건물</p>
+      <h2 id="bldg-title">봉일천의 두 건물</h2>
+      <p class="lead">파주시 조리읍 봉일천에 상가 건물 두 동을 보유하고 직접 임대·관리합니다.</p>
+    </div>
+    <div class="bldgs">
+      <article class="bldg">
+        <figure>
+          <div class="render flip" style="aspect-ratio:16/10">
+            <img class="day" src="assets/deokdo-day.jpg" width="1600" height="1200" alt="덕도빌딩 조감도, 낮">
+            <img class="dusk" src="assets/deokdo-dusk.jpg" width="1600" height="1200" alt="덕도빌딩 조감도, 해질녘">
+          </div>
+        </figure>
+        <h3>덕도빌딩</h3>
+        <p class="addr">경기도 파주시 조리읍 통일로 324</p>
+        <p>봉일천 통일로변에 자리한 석재 마감 근린 상가 건물입니다.</p>
+        <div class="links">
+          <a href="https://map.kakao.com/link/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%ED%8C%8C%EC%A3%BC%EC%8B%9C%20%EC%A1%B0%EB%A6%AC%EC%9D%8D%20%ED%86%B5%EC%9D%BC%EB%A1%9C%20324" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a>
+          <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%ED%8C%8C%EC%A3%BC%EC%8B%9C%20%EC%A1%B0%EB%A6%AC%EC%9D%8D%20%ED%86%B5%EC%9D%BC%EB%A1%9C%20324" target="_blank" rel="noopener">네이버 지도에서 보기 ↗</a>
+        </div>
+      </article>
+      <article class="bldg">
+        <figure>
+          <div class="pic"><img src="assets/bongilcheon-2.jpg" width="1600" height="900" alt="봉일천 보유 건물 조감도. 붉은 테두리와 유리 커튼월, 필로티 주차장이 있는 건물" loading="lazy"></div>
+        </figure>
+        <h3>봉일천 보유 건물 Ⅱ</h3>
+        <p class="addr">경기도 파주시 조리읍 봉일천 일대</p>
+        <p>유리 커튼월 외관과 필로티 주차장을 갖춘 건물입니다.</p>
+        <div class="links"><a href="#contact">임대 문의하기</a></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 임차 현황 -->
+  <section class="sec wrap" id="tenants" aria-labelledby="ten-title">
+    <div class="sec-head">
+      <p class="eyebrow">임차 현황</p>
+      <h2 id="ten-title">동네 생활을 채우는 입점 업체</h2>
+    </div>
+    <div class="tenancy">
+      <div class="tenancy-text">
+        <p style="color:var(--ink-2);max-width:34em">봉일천 입점 업체는 생활용품점, 편의점, 헬스클럽, 스터디카페처럼 주민이 매일 찾는 근린 업종입니다. 고양시에서도 임대 2건을 운영하며, 월 임대료의 약 3분의 2가 봉일천에서 나옵니다.</p>
+        <dl class="kv">
+          <div><dt>임대 계약</dt><dd>9건<small>봉일천 7 · 고양시 2</small></dd></div>
+          <div><dt>월 임대료 합계</dt><dd class="num">3,082만 원<small>부가가치세 별도</small></dd></div>
+          <div><dt>연 환산</dt><dd class="num">3억 6,984만 원<small>월 임대료 × 12</small></dd></div>
+        </dl>
+        <div class="chart">
+          <h3>지역별 월 임대료<small>2026년 9월</small></h3>
+          <div class="stack" role="img" aria-label="월 임대료 3,082만 원 중 봉일천 1,982만 원(64.3%), 고양시 1,100만 원(35.7%)">
+            <span class="seg" tabindex="0" style="--sw:var(--s1);flex-grow:64.31" data-tip="봉일천 7건 · 월 1,982만 원 (64.3%)"></span>
+            <span class="seg" tabindex="0" style="--sw:var(--s3);flex-grow:35.69" data-tip="고양시 2건 · 월 1,100만 원 (35.7%)"></span>
+          </div>
+          <ul class="legend values">
+            <li style="--sw:var(--s1)"><span>봉일천 (7건)</span><span>1,982만 원 · 64.3%</span></li>
+            <li style="--sw:var(--s3)"><span>고양시 (2건)</span><span>1,100만 원 · 35.7%</span></li>
+          </ul>
+        </div>
+        <p class="note">2026년 9월 발행 세금계산서 기준, 공급가액. 임차인별 임대 조건은 비공개</p>
+      </div>
+
+      <div class="board" aria-labelledby="board-title">
+        <div class="board-head"><span class="seal" aria-hidden="true">덕<br>도</span><h3 id="board-title">입점 안내</h3><span>BONGILCHEON</span></div>
+        <div class="board-group">
+          <h4>생활 · 쇼핑</h4>
+          <ul>
+            <li><b>다이소</b><i>생활용품</i></li>
+            <li><b>GS25 파주봉일천점</b><i>편의점</i></li>
+            <li><b>폰대장</b><i>휴대폰</i></li>
+          </ul>
+        </div>
+        <div class="board-group">
+          <h4>운동 · 학습</h4>
+          <ul>
+            <li><b>토브짐</b><i>헬스클럽</i></li>
+            <li><b>올라스터디카페 봉일천점</b><i>스터디카페</i></li>
+          </ul>
+        </div>
+        <div class="board-group">
+          <h4>생활 서비스 · 음식</h4>
+          <ul>
+            <li><b>믿음부동산공인중개사</b><i>부동산 중개</i></li>
+            <li><b>행복한 소풍</b><i>분식</i></li>
+          </ul>
+        </div>
+        <div class="board-foot"><span>공실·임대 문의</span><a href="mailto:y-green@naver.com">y-green@naver.com</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 재무 현황 -->
+  <section class="sec wrap" id="finance" aria-labelledby="fin-title">
+    <div class="sec-head">
+      <p class="eyebrow">재무 현황 · 2025 사업연도</p>
+      <h2 id="fin-title">임대수입의 4분의 3이 영업이익으로</h2>
+      <p class="lead">국세청에 신고한 2025 사업연도(2025. 1. 1 ~ 12. 31) 표준재무제표를 요약했습니다.</p>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><span class="label">매출액</span><span class="value">3억 6,657<small>만 원</small></span><span class="sub">전액 부동산 임대수입</span></div>
+      <div class="tile"><span class="label">영업이익</span><span class="value">2억 7,730<small>만 원</small></span><span class="sub">영업이익률 75.6%</span></div>
+      <div class="tile"><span class="label">당기순이익</span><span class="value">5,527<small>만 원</small></span><span class="sub">법인세비용 0원</span></div>
+      <div class="tile"><span class="label">자산총계</span><span class="value">80억 8,379<small>만 원</small></span><span class="sub">2025. 12. 31 현재</span></div>
+    </div>
+
+    <div class="fin-read">
+      <p>판매비와관리비가 매출의 4분의 1 수준이라 영업이익률이 높습니다. 다만 차입금 이자비용(2억 614만 원)이 영업이익의 74%를 차지해, 순이익은 영업이익의 약 5분의 1입니다.</p>
+      <p>자산의 98.5%가 토지와 건물이며, 자금의 90%를 부채로 조달했습니다.</p>
+    </div>
+
+    <div class="fin-grid">
+      <div class="chart">
+        <h3>손익 흐름<small>2025년, 단위 백만 원</small></h3>
+        <ul class="legend">
+          <li style="--sw:var(--s1)">합계</li>
+          <li style="--sw:var(--s2)">감소</li>
+          <li style="--sw:var(--s3)">증가</li>
+        </ul>
+        <div class="wf" role="img" aria-label="매출액 366.6백만 원에서 판매비와관리비 89.3을 빼 영업이익 277.3, 영업외수익 5.8을 더하고 영업외비용 227.8을 빼 당기순이익 55.3백만 원">
+          <div class="wf-row"><span class="wf-label">매출액</span><div class="wf-track">
+            <span class="wf-bar total" tabindex="0" style="--sw:var(--s1);left:0;width:91.64%" data-tip="매출액 366,570,000원"></span><span class="wf-val" style="left:91.64%">366.6</span></div></div>
+          <div class="wf-row"><span class="wf-label">판매비와관리비</span><div class="wf-track">
+            <span class="wf-bar" tabindex="0" style="--sw:var(--s2);left:69.33%;width:22.32%" data-tip="판매비와관리비 −89,269,652원 (세금과공과 2,027만 · 지급수수료 2,558만 · 소모품비 1,153만 원 등)"></span><span class="wf-val" style="left:91.64%">−89.3</span></div></div>
+          <div class="wf-row"><span class="wf-label">영업이익</span><div class="wf-track">
+            <span class="wf-bar total" tabindex="0" style="--sw:var(--s1);left:0;width:69.33%" data-tip="영업이익 277,300,348원 (영업이익률 75.6%)"></span><span class="wf-val" style="left:69.33%">277.3</span></div></div>
+          <div class="wf-row"><span class="wf-label">영업외수익</span><div class="wf-track">
+            <span class="wf-bar" tabindex="0" style="--sw:var(--s3);left:69.33%;width:1.45%" data-tip="영업외수익 +5,784,357원 (이자수익 465만 원 등)"></span><span class="wf-val" style="left:70.78%">+5.8</span></div></div>
+          <div class="wf-row"><span class="wf-label">영업외비용</span><div class="wf-track">
+            <span class="wf-bar" tabindex="0" style="--sw:var(--s2);left:13.82%;width:56.95%" data-tip="영업외비용 −227,819,643원 (이자비용 206,140,463원 · 외환차손 21,600,000원)"></span><span class="wf-val" style="left:70.78%">−227.8</span></div></div>
+          <div class="wf-row"><span class="wf-label">당기순이익</span><div class="wf-track">
+            <span class="wf-bar total" tabindex="0" style="--sw:var(--s1);left:0;width:13.82%" data-tip="당기순이익 55,265,062원"></span><span class="wf-val" style="left:13.82%">55.3</span></div></div>
+          <div class="wf-axis" aria-hidden="true"><span></span><div class="wf-ticks"><span style="left:0">0</span><span style="left:25%">100</span><span style="left:50%">200</span><span style="left:75%">300</span><span style="left:100%">400</span></div></div>
+        </div>
+      </div>
+
+      <div class="fin-side">
+        <div class="chart">
+          <h3>자산 구성<small>2025. 12. 31</small></h3>
+          <div class="stack" role="img" aria-label="자산총계 80억 8,379만 원 중 토지 66.5%, 건물 32.0%, 기타 1.5%">
+            <span class="seg" tabindex="0" style="--sw:var(--s1);flex-grow:66.53" data-tip="토지 5,378,357,999원 (66.5%)"></span>
+            <span class="seg" tabindex="0" style="--sw:var(--s3);flex-grow:32.00" data-tip="건물 2,587,063,975원 (감가상각 후, 32.0%)"></span>
+            <span class="seg" tabindex="0" style="--sw:var(--s2);flex-grow:1.46" data-tip="현금·매출채권·비품 등 118,366,565원 (1.5%)"></span>
+          </div>
+          <ul class="legend values">
+            <li style="--sw:var(--s1)"><span>토지</span><span>53억 7,836만 원 · 66.5%</span></li>
+            <li style="--sw:var(--s3)"><span>건물 (감가상각 후)</span><span>25억 8,706만 원 · 32.0%</span></li>
+            <li style="--sw:var(--s2)"><span>현금·매출채권·비품 등</span><span>1억 1,837만 원 · 1.5%</span></li>
+          </ul>
+        </div>
+        <div class="chart">
+          <h3>자금 조달<small>2025. 12. 31</small></h3>
+          <div class="stack" role="img" aria-label="부채 90.1%, 자본 9.9%">
+            <span class="seg" tabindex="0" style="--sw:var(--s2);flex-grow:90.07" data-tip="부채총계 7,281,373,147원 (단기차입금 6,889,937,091원 · 임대보증금 376,927,000원 등)"></span>
+            <span class="seg" tabindex="0" style="--sw:var(--s1);flex-grow:9.93" data-tip="자본총계 802,415,392원 (자본금 1억 1,800만 원 · 이익잉여금 6억 8,442만 원)"></span>
+          </div>
+          <ul class="legend values">
+            <li style="--sw:var(--s2)"><span>부채</span><span>72억 8,137만 원 · 90.1%</span></li>
+            <li style="--sw:var(--s1)"><span>자본</span><span>8억 242만 원 · 9.9%</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="statements">
+      <div class="tbl-wrap">
+        <table>
+          <caption>손익계산서 <small>2025. 1. 1 ~ 12. 31 · 단위 원</small></caption>
+          <tbody>
+            <tr><th scope="row">매출액 (부동산 임대수입)</th><td class="n">366,570,000</td></tr>
+            <tr><th scope="row">매출원가</th><td class="n">0</td></tr>
+            <tr><th scope="row">판매비와관리비</th><td class="n">89,269,652</td></tr>
+            <tr class="total"><th scope="row">영업이익</th><td class="n">277,300,348</td></tr>
+            <tr><th scope="row">영업외수익</th><td class="n">5,784,357</td></tr>
+            <tr><th scope="row">영업외비용</th><td class="n">227,819,643</td></tr>
+            <tr class="sub"><th scope="row">이자비용</th><td class="n">206,140,463</td></tr>
+            <tr class="sub"><th scope="row">외환차손</th><td class="n">21,600,000</td></tr>
+            <tr><th scope="row">법인세비용차감전순이익</th><td class="n">55,265,062</td></tr>
+            <tr><th scope="row">법인세비용</th><td class="n">0</td></tr>
+            <tr class="total"><th scope="row">당기순이익</th><td class="n">55,265,062</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <caption>재무상태표 <small>2025. 12. 31 현재 · 단위 원</small></caption>
+          <tbody>
+            <tr><th scope="row">유동자산</th><td class="n">87,688,316</td></tr>
+            <tr><th scope="row">비유동자산</th><td class="n">7,996,100,223</td></tr>
+            <tr class="sub"><th scope="row">토지</th><td class="n">5,378,357,999</td></tr>
+            <tr class="sub"><th scope="row">건물 (감가상각누계액 차감)</th><td class="n">2,587,063,975</td></tr>
+            <tr class="sub"><th scope="row">비품 (감가상각누계액 차감)</th><td class="n">30,678,249</td></tr>
+            <tr class="total"><th scope="row">자산총계</th><td class="n">8,083,788,539</td></tr>
+            <tr><th scope="row">유동부채</th><td class="n">6,904,446,147</td></tr>
+            <tr class="sub"><th scope="row">기타단기차입금</th><td class="n">6,889,937,091</td></tr>
+            <tr><th scope="row">비유동부채 (장기임대보증금)</th><td class="n">376,927,000</td></tr>
+            <tr class="total"><th scope="row">부채총계</th><td class="n">7,281,373,147</td></tr>
+            <tr><th scope="row">자본금</th><td class="n">118,000,000</td></tr>
+            <tr><th scope="row">이익잉여금</th><td class="n">684,415,392</td></tr>
+            <tr class="total"><th scope="row">자본총계</th><td class="n">802,415,392</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="note" style="margin-top:14px">자료: 국세청 표준재무제표증명 (2025 사업연도 정기신고, 2026. 4. 18 발급), 세무신고 기준 수치</p>
+  </section>
+
+  <!-- 게임 사업 -->
+  <div class="band" id="game">
+    <section class="sec wrap" aria-labelledby="game-h">
+      <div class="sec-head">
+        <p class="eyebrow">다음 사업 · 게임 개발</p>
+        <div class="game-title">
+          <img src="assets/game-icon.png" width="256" height="256" alt="동방열국지 아이콘">
+          <h2 id="game-h">첫 작품 <span class="q">「동방열국지」</span></h2>
+        </div>
+        <p class="lead">임진왜란(1592)부터 청의 중국 통일(1683)까지, 조선·후금·왜·북원·명 다섯 나라가 한반도와 만주, 중원, 일본 열도, 몽골 초원을 두고 겨루는 턴제 영토 전략 게임입니다.</p>
+      </div>
+      <div class="game">
+        <figure>
+          <div class="shots">
+            <div class="browser">
+              <div class="bar">chardduc-sys.github.io/fareast</div>
+              <img src="assets/game-desktop.jpg" width="1600" height="983" alt="동방열국지 PC 화면. 조선·후금·왜국·북원·명 세력이 색으로 구분된 동아시아 영지 지도와 병력 편성 패널" loading="lazy">
+            </div>
+            <img class="phone" src="assets/game-mobile.jpg" width="640" height="1280" alt="동방열국지 휴대폰 화면. 한반도 지도와 병종별 병력 패널" loading="lazy">
+          </div>
+          <figcaption><span>「동방열국지」 플레이 화면 (PC · 휴대폰)</span></figcaption>
+        </figure>
+        <div class="game-side">
+          <ul class="feat">
+            <li><b>지도</b><span>실제 해안선과 행정 경계로 그린 동아시아 영지 지도</span></li>
+            <li><b>병종</b><span>기병 · 궁병 · 살수병 · 수군 · 화포병, 다섯 병종</span></li>
+            <li><b>공성</b><span>다섯 단계 성곽 축성, 공성전과 구원군</span></li>
+            <li><b>바다</b><span>해전과 상륙, 여러 턴에 걸친 바닷길 원정</span></li>
+            <li><b>내정</b><span>수입 · 군량 · 민심을 함께 따지는 영지 운영</span></li>
+            <li><b>관전</b><span>다섯 나라를 모두 AI에 맡기는 「천하쟁투」 관전 모드</span></li>
+            <li><b>플랫폼</b><span>설치 없이 PC·휴대폰 브라우저에서 실행, 구글 계정으로 이어 하기, 한국어·영어</span></li>
+          </ul>
+          <ol class="road" aria-label="게임 사업 단계">
+            <li class="done"><b>웹 버전 공개 <span class="state">완료</span></b><span>2026년 10월, 누구나 무료로 플레이</span></li>
+            <li><b>Google Play 출시 <span class="state">진행 중</span></b><span>안드로이드 앱 등록 준비</span></li>
+            <li><b>온라인 게임 개발사로 성장 <span class="state">계획</span></b><span>후속 작품과 온라인 서비스 확대</span></li>
+          </ol>
+          <div class="cta" style="margin-top:0">
+            <a class="btn primary" href="https://chardduc-sys.github.io/fareast/" target="_blank" rel="noopener">브라우저에서 바로 플레이 ↗</a>
+            <a class="btn" href="https://chardduc-sys.github.io/privacy.html" target="_blank" rel="noopener">개인정보처리방침 ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- 전자공고 -->
+  <section class="sec wrap" id="notice" aria-labelledby="notice-title">
+    <div class="sec-head">
+      <p class="eyebrow">전자공고</p>
+      <h2 id="notice-title">회사 공고</h2>
+    </div>
+    <div class="notice-grid">
+      <div>
+        <p>주식회사 덕도의 공고는 등기된 공고방법에 따라 회사 인터넷 홈페이지에 게재합니다.</p>
+        <p>전산 장애나 그 밖의 부득이한 사유로 홈페이지에 공고할 수 없을 때에는 서울특별시에서 발행되는 일간 서울경제신문에 게재합니다.</p>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th scope="col" style="width:4.5em">번호</th><th scope="col">제목</th><th scope="col" style="width:7.5em">게시일</th></tr></thead>
+          <tbody><tr class="empty"><td colspan="3">게시 중인 공고 없음</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 연락처 -->
+  <section class="sec wrap" id="contact" aria-labelledby="contact-title">
+    <div class="sec-head">
+      <p class="eyebrow">연락처</p>
+      <h2 id="contact-title">임대·제휴 문의</h2>
+      <p class="lead">공실 임대, 게임 제휴, 그 밖의 문의는 이메일로 보내 주세요.</p>
+    </div>
+    <div class="contact">
+      <div>
+        <span class="label">이메일</span>
+        <a class="big" id="email" href="mailto:y-green@naver.com">y-green@naver.com</a>
+        <button type="button" class="copy" id="copy-email">주소 복사</button>
+      </div>
+      <div>
+        <span class="label">본점</span>
+        <span>경기도 고양시 덕양구 삼송로 291-6 (지축동)</span>
+      </div>
+      <div>
+        <span class="label">덕도빌딩</span>
+        <span>경기도 파주시 조리읍 통일로 324</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="brand" href="#top"><span class="seal" aria-hidden="true">덕<br>도</span><b>주식회사 덕도</b></a>
+    <div class="biz">
+      <span>대표이사 김경선</span>
+      <span>사업자등록번호 105-87-95652</span>
+      <span>본점 경기도 고양시 덕양구 삼송로 291-6 (지축동)</span>
+      <span>이메일 y-green@naver.com</span>
+    </div>
+    <div class="biz">
+      <a href="https://chardduc-sys.github.io/fareast/" target="_blank" rel="noopener">동방열국지</a>
+      <a href="https://chardduc-sys.github.io/privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>
+      <span>© 2026 주식회사 덕도</span>
+    </div>
+  </div>
+</footer>
+
+<div id="tip" role="tooltip" hidden></div>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var KEY = 'deokdo-theme';
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.mode button'));
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (!root.hasAttribute('data-theme') && (saved === 'light' || saved === 'dark')) root.setAttribute('data-theme', saved);
+  } catch (e) {}
+
+  function effective() {
+    var t = root.getAttribute('data-theme');
+    if (t === 'light' || t === 'dark') return t;
+    return mq && mq.matches ? 'dark' : 'light';
+  }
+  function sync() {
+    var e = effective();
+    btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-set') === e)); });
+  }
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-set');
+      root.setAttribute('data-theme', v);
+      try { localStorage.setItem(KEY, v); } catch (e) {}
+      sync();
+    });
+  });
+  if (mq && mq.addEventListener) mq.addEventListener('change', sync);
+  if (window.MutationObserver) new MutationObserver(sync).observe(root, { attributes: true, attributeFilter: ['data-theme'] });
+  sync();
+
+  // chart tooltips
+  var tip = document.getElementById('tip');
+  function place(x, y) {
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = Math.min(Math.max(8, x + 12), window.innerWidth - w - 8);
+    var top = y - h - 12; if (top < 8) top = y + 16;
+    tip.style.left = left + 'px'; tip.style.top = top + 'px';
+  }
+  function show(el, x, y) { tip.textContent = el.getAttribute('data-tip'); tip.hidden = false; place(x, y); }
+  function hide() { tip.hidden = true; }
+  document.querySelectorAll('[data-tip]').forEach(function (el) {
+    el.setAttribute('aria-label', el.getAttribute('data-tip'));
+    el.addEventListener('pointerenter', function (e) { show(el, e.clientX, e.clientY); });
+    el.addEventListener('pointermove', function (e) { if (!tip.hidden) place(e.clientX, e.clientY); });
+    el.addEventListener('pointerleave', hide);
+    el.addEventListener('focus', function () { var r = el.getBoundingClientRect(); show(el, r.left + r.width / 2, r.top); });
+    el.addEventListener('blur', hide);
+  });
+  window.addEventListener('scroll', hide, { passive: true });
+
+  // copy email
+  var copyBtn = document.getElementById('copy-email');
+  var email = 'y-green@naver.com';
+  copyBtn.addEventListener('click', function () {
+    function done(ok) {
+      copyBtn.textContent = ok ? '복사했습니다' : '주소를 선택했습니다';
+      setTimeout(function () { copyBtn.textContent = '주소 복사'; }, 2000);
+    }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); done(false);
+    }
+    try {
+      navigator.clipboard.writeText(email).then(function () { done(true); }, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+</body>
+</html>
