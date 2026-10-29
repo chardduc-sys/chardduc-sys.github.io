@@ -7,13 +7,13 @@
 <link rel="canonical" href="https://chardduc-sys.github.io/duckdo/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="주식회사 덕도">
-<meta property="og:description" content="파주 봉일천 상가 건물 임대, 그리고 턴제 전략 게임 「동방열국지」">
+<meta property="og:description" content="봉일천 중심 사거리 코너의 덕도본관·별관·소관 임대, 그리고 턴제 전략 게임 「동방열국지」">
 <meta property="og:image" content="https://chardduc-sys.github.io/duckdo/assets/deokdo-day.jpg">
 <meta property="og:url" content="https://chardduc-sys.github.io/duckdo/">
 <meta name="theme-color" content="#EDEEEA">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}</style>
 <title>주식회사 덕도</title>
-<meta name="description" content="파주 봉일천에서 상가 건물을 보유·임대하고, 턴제 전략 게임 「동방열국지」를 만드는 주식회사 덕도입니다.">
+<meta name="description" content="파주 봉일천 중심가 사거리 코너의 덕도본관·별관·소관을 임대하고, 턴제 전략 게임 「동방열국지」를 만드는 주식회사 덕도입니다.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
@@ -220,7 +220,13 @@ figcaption .mono { font-family: var(--f-mono); font-size: 12px; }
 @media (max-width: 860px) { .about { grid-template-columns: minmax(0, 1fr); gap: 36px; } }
 
 /* buildings */
-.bldgs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; }
+.bldgs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.loc-tag { position: absolute; left: 12px; top: 12px; z-index: 1; display: inline-flex; align-items: center; gap: 8px; background: var(--surface); color: var(--ink); font: 600 13.5px/1.2 var(--f-body); padding: 8px 12px 8px 10px; border-radius: 3px; box-shadow: 0 2px 10px rgba(0,0,0,.18); }
+.loc-tag i { width: 9px; height: 9px; flex: none; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent); }
+.plate { aspect-ratio: 16 / 10; max-width: 100%; border-radius: 4px; border: 1px solid var(--line); background-color: var(--surface); background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 48px 32px; display: grid; place-content: center; justify-items: center; gap: 12px; }
+.plate b { font: 700 24px/1 var(--f-display); letter-spacing: 0.32em; padding: 12px 10px 12px 18px; background: var(--ink); color: var(--bg); border-radius: 2px; }
+.plate span { font-size: 12.5px; color: var(--muted); background: var(--surface); padding: 2px 8px; }
+.bldg .tag { justify-self: start; font-size: 12.5px; padding: 3px 8px; border: 1px solid var(--accent); border-radius: 3px; }
 .bldg { display: grid; gap: 16px; align-content: start; }
 .bldg .pic { aspect-ratio: 16 / 10; max-width: 100%; border-radius: 4px; overflow: hidden; position: relative; background: var(--surface); }
 .bldg .pic img { width: 100%; height: 100%; object-fit: cover; }
@@ -228,7 +234,7 @@ figcaption .mono { font-family: var(--f-mono); font-size: 12px; }
 .bldg .addr { font-size: 15px; color: var(--ink-2); }
 .bldg p { color: var(--ink-2); }
 .links { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 14px; }
-@media (max-width: 760px) { .bldgs { grid-template-columns: minmax(0, 1fr); gap: 44px; } }
+@media (max-width: 900px) { .bldgs { grid-template-columns: minmax(0, 1fr); gap: 44px; } }
 
 /* tenants */
 .tenancy { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 48px; align-items: start; }
@@ -431,9 +437,9 @@ footer .brand b { font-size: 16px; }
 <main id="top">
   <section class="hero wrap" aria-labelledby="hero-title">
     <div>
-      <p class="eyebrow">파주 봉일천 · 부동산 임대 · 게임 개발</p>
-      <h1 id="hero-title">봉일천의 건물을 가꾸고, 동아시아의 <em>지도</em>를 그립니다</h1>
-      <p class="lede">주식회사 덕도는 경기도 파주시 조리읍 봉일천에서 상가 건물을 보유하고 임대합니다. 임대 사업에서 나오는 꾸준한 수입을 바탕으로 온라인 게임 개발사로 사업을 넓히고 있습니다.</p>
+      <p class="eyebrow">파주 봉일천 중심가 · 사거리 코너</p>
+      <h1 id="hero-title">봉일천 사거리의 건물을 가꾸고, 동아시아의 <em>지도</em>를 그립니다</h1>
+      <p class="lede">주식회사 덕도는 파주시 조리읍 봉일천 중심가 사거리 코너 일대에 덕도본관·별관·소관 세 건물을 보유하고 임대합니다. 임대 사업에서 나오는 꾸준한 수입을 바탕으로 온라인 게임 개발사로 사업을 넓히고 있습니다.</p>
       <div class="cta">
         <a class="btn primary" href="https://chardduc-sys.github.io/fareast/" target="_blank" rel="noopener">「동방열국지」 플레이 ↗</a>
         <a class="btn" href="#contact">임대 문의</a>
@@ -441,18 +447,19 @@ footer .brand b { font-size: 16px; }
     </div>
     <figure>
       <div class="render">
-        <img class="day" src="assets/deokdo-day.jpg" width="1600" height="1200" alt="덕도빌딩 조감도. 낮 하늘 아래 모퉁이에 선 4층 석재 마감 상가 건물">
-        <img class="dusk" src="assets/deokdo-dusk.jpg" width="1600" height="1200" alt="덕도빌딩 조감도. 해질녘 불 켜진 창이 보이는 같은 건물">
+        <span class="loc-tag"><i></i>봉일천 중심 사거리 코너</span>
+        <img class="day" src="assets/deokdo-day.jpg" width="1600" height="1200" alt="덕도본관 조감도. 낮 하늘 아래 사거리 모퉁이에 선 4층 석재 마감 상가 건물">
+        <img class="dusk" src="assets/deokdo-dusk.jpg" width="1600" height="1200" alt="덕도본관 조감도. 해질녘 불 켜진 창이 보이는 같은 건물">
       </div>
-      <figcaption><span>덕도빌딩 조감도</span><span class="mono">파주시 조리읍 통일로 324</span></figcaption>
+      <figcaption><span>덕도본관 조감도</span><span class="mono">파주시 조리읍 통일로 324</span></figcaption>
     </figure>
   </section>
 
   <div class="wrap">
     <dl class="facts">
-      <div><dt>설립</dt><dd>2013년 11월</dd></div>
+      <div><dt>입지</dt><dd>봉일천 중심 사거리 코너</dd></div>
+      <div><dt>보유 건물</dt><dd>본관 · 별관 · 소관 3동</dd></div>
       <div><dt>2025년 임대수입</dt><dd class="num">3억 6,657만 원</dd></div>
-      <div><dt>봉일천 입점 업체</dt><dd>7곳</dd></div>
       <div><dt>첫 게임</dt><dd>「동방열국지」</dd></div>
     </dl>
   </div>
@@ -509,20 +516,20 @@ footer .brand b { font-size: 16px; }
   <section class="sec wrap" id="buildings" aria-labelledby="bldg-title">
     <div class="sec-head">
       <p class="eyebrow">보유 건물</p>
-      <h2 id="bldg-title">봉일천의 두 건물</h2>
-      <p class="lead">파주시 조리읍 봉일천에 상가 건물 두 동을 보유하고 직접 임대·관리합니다.</p>
+      <h2 id="bldg-title">봉일천 사거리의 세 건물</h2>
+      <p class="lead">파주시 조리읍 봉일천 중심가 사거리 코너 일대에 덕도본관·덕도별관·덕도소관 세 동을 보유하고 직접 임대하고 관리합니다.</p>
     </div>
     <div class="bldgs">
       <article class="bldg">
         <figure>
           <div class="render flip" style="aspect-ratio:16/10">
-            <img class="day" src="assets/deokdo-day.jpg" width="1600" height="1200" alt="덕도빌딩 조감도, 낮">
-            <img class="dusk" src="assets/deokdo-dusk.jpg" width="1600" height="1200" alt="덕도빌딩 조감도, 해질녘">
+            <img class="day" src="assets/deokdo-day.jpg" width="1600" height="1200" alt="덕도본관 조감도, 낮">
+            <img class="dusk" src="assets/deokdo-dusk.jpg" width="1600" height="1200" alt="덕도본관 조감도, 해질녘">
           </div>
         </figure>
-        <h3>덕도빌딩</h3>
+        <h3>덕도본관</h3>
         <p class="addr">경기도 파주시 조리읍 통일로 324</p>
-        <p>봉일천 통일로변에 자리한 석재 마감 근린 상가 건물입니다.</p>
+        <p>봉일천 중심가 사거리 코너에 자리한 석재 마감 근린 상가 건물입니다.</p>
         <div class="links">
           <a href="https://map.kakao.com/link/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%ED%8C%8C%EC%A3%BC%EC%8B%9C%20%EC%A1%B0%EB%A6%AC%EC%9D%8D%20%ED%86%B5%EC%9D%BC%EB%A1%9C%20324" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a>
           <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%ED%8C%8C%EC%A3%BC%EC%8B%9C%20%EC%A1%B0%EB%A6%AC%EC%9D%8D%20%ED%86%B5%EC%9D%BC%EB%A1%9C%20324" target="_blank" rel="noopener">네이버 지도에서 보기 ↗</a>
@@ -530,11 +537,24 @@ footer .brand b { font-size: 16px; }
       </article>
       <article class="bldg">
         <figure>
-          <div class="pic"><img src="assets/bongilcheon-2.jpg" width="1600" height="900" alt="봉일천 보유 건물 조감도. 붉은 테두리와 유리 커튼월, 필로티 주차장이 있는 건물" loading="lazy"></div>
+          <div class="pic"><img src="assets/bongilcheon-2.jpg" width="1600" height="900" alt="덕도별관 조감도. 붉은 테두리와 유리 커튼월, 필로티 주차장이 있는 건물" loading="lazy"></div>
         </figure>
-        <h3>봉일천 보유 건물 Ⅱ</h3>
-        <p class="addr">경기도 파주시 조리읍 봉일천 일대</p>
-        <p>유리 커튼월 외관과 필로티 주차장을 갖춘 건물입니다.</p>
+        <h3>덕도별관</h3>
+        <p class="addr">경기도 파주시 조리읍 두루봉로 5-1</p>
+        <p>유리 커튼월 외관과 필로티 주차장을 갖춘 건물입니다. 현재 봉일천 다이소가 임차해 운영하고 있습니다.</p>
+        <span class="tag">임차 중 · 다이소</span>
+        <div class="links">
+          <a href="https://map.kakao.com/link/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%ED%8C%8C%EC%A3%BC%EC%8B%9C%20%EC%A1%B0%EB%A6%AC%EC%9D%8D%20%EB%91%90%EB%A3%A8%EB%B4%89%EB%A1%9C%205-1" target="_blank" rel="noopener">카카오맵에서 보기 ↗</a>
+          <a href="https://map.naver.com/p/search/%EA%B2%BD%EA%B8%B0%EB%8F%84%20%ED%8C%8C%EC%A3%BC%EC%8B%9C%20%EC%A1%B0%EB%A6%AC%EC%9D%8D%20%EB%91%90%EB%A3%A8%EB%B4%89%EB%A1%9C%205-1" target="_blank" rel="noopener">네이버 지도에서 보기 ↗</a>
+        </div>
+      </article>
+      <article class="bldg">
+        <figure>
+          <div class="plate" role="img" aria-label="덕도소관 현판, 사진 준비 중"><b>덕도소관</b><span>사진 준비 중</span></div>
+        </figure>
+        <h3>덕도소관</h3>
+        <p class="addr">덕도본관(통일로 324) 바로 옆</p>
+        <p>덕도본관과 나란히 붙은 상가 건물입니다. 본관과 함께 사거리 코너 상권을 이룹니다.</p>
         <div class="links"><a href="#contact">임대 문의하기</a></div>
       </article>
     </div>
@@ -573,7 +593,7 @@ footer .brand b { font-size: 16px; }
         <div class="board-group">
           <h4>생활 · 쇼핑</h4>
           <ul>
-            <li><b>다이소</b><i>생활용품</i></li>
+            <li><b>다이소</b><i>생활용품 · 별관</i></li>
             <li><b>GS25 파주봉일천점</b><i>편의점</i></li>
             <li><b>폰대장</b><i>휴대폰</i></li>
           </ul>
@@ -797,7 +817,7 @@ footer .brand b { font-size: 16px; }
         <span>경기도 고양시 덕양구 삼송로 291-6 (지축동)</span>
       </div>
       <div>
-        <span class="label">덕도빌딩</span>
+        <span class="label">덕도본관</span>
         <span>경기도 파주시 조리읍 통일로 324</span>
       </div>
     </div>
