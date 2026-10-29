@@ -379,6 +379,20 @@ th { font-weight: 400; }
 .band a:focus-visible, .band button:focus-visible { outline-color: var(--game-gold); }
 @media (max-width: 900px) { .game { grid-template-columns: minmax(0, 1fr); gap: 36px; } .phone { width: 30%; } }
 
+/* promo video */
+.promo { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 44px; align-items: center; margin-top: 56px; padding-top: 44px; border-top: 1px solid var(--game-line); }
+.yt-poster, .yt-frame { position: relative; display: block; aspect-ratio: 9 / 16; max-width: 100%; border-radius: 14px; overflow: hidden; background: var(--game-2); box-shadow: 0 0 0 1px var(--game-line), 0 18px 40px rgba(0,0,0,.35); }
+.yt-poster img, .yt-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border: 0; }
+.play { position: absolute; left: 50%; top: 50%; width: 68px; height: 68px; transform: translate(-50%, -50%); border-radius: 50%; background: rgba(14,23,32,.72); box-shadow: 0 0 0 2px var(--game-gold); transition: transform .2s ease, background .2s ease; }
+.play::before { content: ""; position: absolute; left: 27px; top: 22px; border-style: solid; border-width: 12px 0 12px 20px; border-color: transparent transparent transparent var(--game-gold); }
+.yt-poster:hover .play, .yt-poster:focus-visible .play { background: rgba(14,23,32,.9); transform: translate(-50%, -50%) scale(1.06); }
+.yt-poster:focus-visible { outline: 2px solid var(--game-gold); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .play { transition: none; } }
+.promo-text { display: grid; gap: 14px; justify-items: start; max-width: 32em; }
+.promo-text h3 { font-size: clamp(22px, 2.4vw, 28px); line-height: 1.3; color: var(--game-ink); }
+.promo-text p:not(.eyebrow) { color: var(--game-mute); }
+@media (max-width: 700px) { .promo { grid-template-columns: minmax(0, 1fr); gap: 24px; } .promo figure { max-width: 300px; } }
+
 /* notice + contact */
 .notice-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: start; }
 .notice-grid > div:first-child { color: var(--ink-2); display: grid; gap: 12px; }
@@ -722,6 +736,21 @@ footer .brand b { font-size: 16px; }
           </div>
         </div>
       </div>
+      <div class="promo">
+        <figure>
+          <a class="yt-poster" data-embed="1" data-yt="6gL0sUd-p24" href="https://www.youtube.com/shorts/6gL0sUd-p24" target="_blank" rel="noopener" aria-label="「동방열국지」 홍보 영상 재생 (YouTube)">
+            <img src="assets/promo-poster.jpg" width="540" height="960" alt="홍보 영상 첫 장면. 학익진으로 맞서는 조선 수군과 왜국 함대의 해상전" loading="lazy">
+            <span class="play" aria-hidden="true"></span>
+          </a>
+          <figcaption><span>「동방열국지」 홍보 영상 (YouTube 쇼츠)</span></figcaption>
+        </figure>
+        <div class="promo-text">
+          <p class="eyebrow">홍보 영상</p>
+          <h3>동방열국지 모바일게임 전략시뮬레이션</h3>
+          <p>YouTube 쇼츠로 공개한 「동방열국지」 홍보 영상입니다. 세로 화면이라 휴대폰으로 보기 좋습니다.</p>
+          <a class="btn" href="https://www.youtube.com/shorts/6gL0sUd-p24" target="_blank" rel="noopener">YouTube에서 보기 ↗</a>
+        </div>
+      </div>
     </section>
   </div>
 
@@ -841,6 +870,21 @@ footer .brand b { font-size: 16px; }
     el.addEventListener('blur', hide);
   });
   window.addEventListener('scroll', hide, { passive: true });
+
+  // promo video: on the public site, play inline instead of leaving the page
+  document.querySelectorAll('.yt-poster[data-embed]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + a.getAttribute('data-yt') + '?autoplay=1&rel=0&playsinline=1';
+      f.title = '「동방열국지」 홍보 영상';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.setAttribute('allowfullscreen', '');
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      var wrap = document.createElement('div'); wrap.className = 'yt-frame'; wrap.appendChild(f);
+      a.parentNode.replaceChild(wrap, a);
+    });
+  });
 
   // copy email
   var copyBtn = document.getElementById('copy-email');
