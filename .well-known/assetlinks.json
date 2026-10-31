@@ -1,10 +1,26 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "io.github.chardducsys.fareast",
-    "sha256_cert_fingerprints": [
-      "00:B5:2B:55:6F:E0:4C:A8:C0:29:0B:CB:C2:2E:33:FF:38:E9:3E:47:D9:52:4A:28:25:B4:48:B3:06:8F:39:5C"
-    ]
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.chardducsys.fareast",
+      "sha256_cert_fingerprints": [
+        "00:B5:2B:55:6F:E0:4C:A8:C0:29:0B:CB:C2:2E:33:FF:38:E9:3E:47:D9:52:4A:28:25:B4:48:B3:06:8F:39:5C"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.chardducsys.fareast.beta",
+      "sha256_cert_fingerprints": [
+        "FC:9B:59:A6:33:B9:EC:60:8A:24:E2:BC:B5:E6:14:7B:0E:FC:55:C8:18:A9:CD:C1:76:0E:A4:F8:D5:D5:5D:06"
+      ]
+    }
   }
-}]
+]
