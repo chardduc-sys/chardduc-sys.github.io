@@ -22,5 +22,29 @@
         "FC:9B:59:A6:33:B9:EC:60:8A:24:E2:BC:B5:E6:14:7B:0E:FC:55:C8:18:A9:CD:C1:76:0E:A4:F8:D5:D5:5D:06"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "duckdo.dongbang",
+      "sha256_cert_fingerprints": [
+        "DA:8F:33:DC:BC:00:D9:37:42:3F:66:0C:A4:C4:33:10:D5:30:1C:E8:90:60:3E:8A:F9:3A:F6:9C:C7:BB:93:2A"
+      ]
+    }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "duckdo.dongbang.beta",
+      "sha256_cert_fingerprints": [
+        "FC:9B:59:A6:33:B9:EC:60:8A:24:E2:BC:B5:E6:14:7B:0E:FC:55:C8:18:A9:CD:C1:76:0E:A4:F8:D5:D5:5D:06"
+      ]
+    }
   }
 ]
